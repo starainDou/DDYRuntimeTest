@@ -337,7 +337,6 @@ objc_setAssociatedObject(self, @selector(property), value, OBJC_ASSOCIATION_RETA
 
 2 给对象添加关联对象
 
-2 给对象添加关联对象
 
 ```
 // block
