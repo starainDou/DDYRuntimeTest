@@ -337,6 +337,42 @@ objc_setAssociatedObject(self, @selector(property), value, OBJC_ASSOCIATION_RETA
 
 2 给对象添加关联对象
 
+2 给对象添加关联对象
+
+```
+// block
+typedef void (^testBlock)(void);
+if (resultBlock) objc_setAssociatedObject(self, "testBlockKey", resultBlock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+testBlock resultBlock = objc_getAssociatedObject(self, "testBlockKey");
+
+// BOOL ,int,枚举值等
+objc_setAssociatedObject(self, "locationTypeKey", @(type), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+DDYCLLocationType type = (DDYCLLocationType)[objc_getAssociatedObject(self, "locationTypeKey") integerValue];
+
+static char const * const ObjectTagKey = "ObjectTag";
+@implementation ClassName (CategoryName)
+- (void) setBoolProperty:(BOOL) property {
+    NSNumber *number = [NSNumber numberWithBool: property];
+    objc_setAssociatedObject(self, ObjectTagKey, number , OBJC_ASSOCIATION_RETAIN);
+}
+
+- (BOOL) boolProperty {
+    NSNumber *number = objc_getAssociatedObject(self, ObjectTagKey);
+    return [number boolValue]; 
+}
+@end
+
+// 用全局key
+static void *testNumKey = &testNumKey;
+ objc_setAssociatedObject(self, testNumKey, @(testNum), OBJC_ASSOCIATION_RETAIN_NONATOMIC); 
+NSNumber *tempNum = objc_getAssociatedObject(self, testNumKey); 
+NSInteger num = tempNum ? tempNum integerValue] : 0;
+
+static const char alertKey;
+typedef void (^successBlock)(NSInteger buttonIndex);
+objc_setAssociatedObject(self, &alertKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+successBlock block = objc_getAssociatedObject(self, &alertKey);
+```
 
 比如 ：我们想把更多的参数传给alertView代理
 ```
